@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI 全栈学习资料库 | 人工智能 · 机器学习 · 深度学习 · TensorFlow · 图像处理</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* ============= 颜色主题：支持浅色 / 深色切换 ============= */
+    :root {
+      --transition-fast: 0.18s ease-out;
+      --transition-med: 0.24s ease-out;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --shadow-soft: 0 22px 40px rgba(15, 23, 42, 0.85);
+      --shadow-card: 0 16px 28px rgba(15, 23, 42, 0.8);
+    }
+
+    /* 深色主题（默认） */
+    body.theme-dark {
+      --bg-color: #0f172a;
+      --bg-elevated: #020617;
+      --card-bg: #020617;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.18);
+      --accent-strong: #0ea5e9;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --border-subtle: rgba(148, 163, 184, 0.35);
+      --nav-bg: linear-gradient(to bottom, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.7), transparent);
+      --footer-bg: radial-gradient(circle at top left, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 1));
+    }
+
+    /* 浅色主题 */
+    body.theme-light {
+      --bg-color: #f3f4f6;
+      --bg-elevated: #ffffff;
+      --card-bg: #ffffff;
+      --accent: #2563eb;
+      --accent-soft: rgba(37, 99, 235, 0.08);
+      --accent-strong: #1d4ed8;
+      --text-main: #1f2933;
+      --text-muted: #6b7280;
+      --border-subtle: rgba(148, 163, 184, 0.5);
+      --nav-bg: linear-gradient(to bottom, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.86), transparent);
+      --footer-bg: radial-gradient(circle at top left, #e5e7eb, #f9fafb);
+      --shadow-soft: 0 18px 32px rgba(15, 23, 42, 0.14);
+      --shadow-card: 0 14px 28px rgba(15, 23, 42, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, -apple-system-body, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, #1d283a 0, #020617 40%, #020617 100%);
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+      transition: background-color var(--transition-med), color var(--transition-med);
+    }
+
+    body.theme-light {
+      background: radial-gradient(circle at top left, #ffffff 0, #f3f4f6 45%, #e5e7eb 100%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    code {
+      font-family: Menlo, Monaco, Consolas, "SF Mono", monospace;
+      padding: 1px 4px;
+      border-radius: 4px;
+      background: rgba(148, 163, 184, 0.16);
+      font-size: 0.85em;
+    }
+
+    /* ============= 布局 ============= */
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .max-width {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px 14px 30px;
+    }
+
+    @media (min-width: 768px) {
+      .max-width {
+        padding: 20px 18px 36px;
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .max-width {
+        max-width: 1240px;
+      }
+    }
+
+    /* ============= 顶部导航 ============= */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .top-nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 10px 14px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    @media (min-width: 768px) {
+      .top-nav-inner {
+        padding: 10px 18px 8px;
+      }
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .brand-logo {
+      width: 28px;
+      height: 28px;
+      border-radius: 14px;
+      background: radial-gradient(circle at 20% 20%, #38bdf8 0, #0ea5e9 35%, #22c55e 75%);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.8);
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    body.theme-light .brand-logo {
+      box-shadow: 0 0 14px rgba(37, 99, 235, 0.7);
+    }
+
+    .brand-logo::after {
+      content: "";
+      position: absolute;
+      inset: 8px 7px;
+      border-radius: 999px;
+      border: 2px solid rgba(15, 23, 42, 0.8);
+      border-top-color: transparent;
+      border-right-color: transparent;
+      transform: rotate(-35deg);
+    }
+
+    .brand-text-title {
+      font-size: 15px;
+      font-weight: 650;
+      letter-spacing: 0.02em;
+      color: var(--text-main);
+      white-space: nowrap;
+    }
+
+    .brand-text-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .nav-pill {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.8);
+      color: #e5e7eb;
+      white-space: nowrap;
+    }
+
+    body.theme-light .nav-pill {
+      background: rgba(255, 255, 255, 0.95);
+      color: #4b5563;
+    }
+
+    .nav-badge {
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.14);
+      color: #e0f2fe;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    body.theme-light .nav-badge {
+      background: rgba(37, 99, 235, 0.08);
+      color: #1d4ed8;
+    }
+
+    .nav-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #2dd4bf;
+      box-shadow: 0 0 10px rgba(34, 211, 238, 0.8);
+    }
+
+    /* 亮度切换按钮（浅色 / 深色） */
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.9);
+      cursor: pointer;
+      transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    body.theme-light .theme-toggle {
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.16);
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.45);
+    }
+
+    .theme-toggle-icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      position: relative;
+    }
+
+    /* 月亮 / 太阳图标通过伪元素实现 */
+    body.theme-dark .theme-toggle-icon {
+      background: radial-gradient(circle at 30% 30%, #e5e7eb 0, #e5e7eb 55%, transparent 60%);
+      box-shadow: 0 0 10px rgba(248, 250, 252, 0.7);
+    }
+
+    body.theme-dark .theme-toggle-icon::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #020617;
+      top: -1px;
+      right: -1px;
+    }
+
+    body.theme-light .theme-toggle-icon {
+      background: radial-gradient(circle at 30% 30%, #fbbf24 0, #f59e0b 60%, #f97316 100%);
+      box-shadow: 0 0 12px rgba(251, 191, 36, 0.8);
+    }
+
+    body.theme-light .theme-toggle-icon::after {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      border-radius: 999px;
+      border: 1px solid rgba(254, 243, 199, 0.8);
+    }
+
+    @media (max-width: 640px) {
+      .nav-right {
+        gap: 4px;
+      }
+      .nav-pill {
+        display: none; /* 小屏幕上隐藏“个人学习 & 内部分享”标签，避免挤压 */
+      }
+    }
+
+    /* ============= 头部区域 ============= */
+    .hero {
+      padding-top: 10px;
+      padding-bottom: 16px;
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 3.2fr) minmax(0, 2.3fr);
+      gap: 20px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+      .hero-layout {
+        gap: 14px;
+      }
+    }
+
+    .hero-title {
+      font-size: clamp(20px, 3.4vw, 29px);
+      line-height: 1.18;
+      font-weight: 720;
+      letter-spacing: 0.02em;
+      margin-bottom: 10px;
+    }
+
+    .hero-title span.highlight {
+      background: linear-gradient(120deg, #38bdf8, #0ea5e9, #22c55e);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    body.theme-light .hero-title span.highlight {
+      background: linear-gradient(120deg, #2563eb, #1d4ed8, #16a34a);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .hero-tag {
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      font-size: 11px;
+      color: var(--text-muted);
+      background: radial-gradient(circle at top left, rgba(148, 163, 184, 0.14), rgba(15, 23, 42, 0.9));
+    }
+
+    body.theme-light .hero-tag {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .hero-tip {
+      font-size: 11px;
+      color: var(--text-muted);
+      opacity: 0.95;
+    }
+
+    .hero-aside {
+      border-radius: 16px;
+      border: 1px solid rgba(148, 163, 184, 0.32);
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.20), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.16), transparent 55%),
+        linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
+      box-shadow: var(--shadow-soft);
+      padding: 12px 12px 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body.theme-light .hero-aside {
+      background:
+        radial-gradient(circle at top left, rgba(59, 130, 246, 0.08), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(16, 185, 129, 0.06), transparent 55%),
+        linear-gradient(145deg, #ffffff, #f3f4f6);
+    }
+
+    .hero-aside-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+      gap: 8px;
+    }
+
+    .hero-aside-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .hero-aside-badge {
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    body.theme-light .hero-aside-badge {
+      background: rgba(255, 255, 255, 0.92);
+    }
+
+    .hero-aside-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+      margin-top: 4px;
+      margin-bottom: 4px;
+    }
+
+    .hero-aside-item {
+      padding: 7px 8px;
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.78);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      font-size: 11px;
+      line-height: 1.45;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    body.theme-light .hero-aside-item {
+      background: rgba(255, 255, 255, 0.93);
+    }
+
+    .hero-aside-item-label {
+      color: var(--text-muted);
+    }
+
+    .hero-aside-item-value {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .hero-aside-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--text-muted);
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .hero-aside-pill {
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.12);
+      color: #e0f2fe;
+      border: 1px solid rgba(56, 189, 248, 0.6);
+      white-space: nowrap;
+    }
+
+    body.theme-light .hero-aside-pill {
+      background: rgba(37, 99, 235, 0.08);
+      color: #1d4ed8;
+      border-color: rgba(37, 99, 235, 0.7);
+    }
+
+    @media (max-width: 640px) {
+      .hero-aside {
+        padding: 10px 10px 9px;
+      }
+      .hero-aside-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    /* ============= 过滤区域（搜索 & 筛选） ============= */
+    .controls {
+      margin-top: 4px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    @media (max-width: 640px) {
+      .controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+
+    .search-box {
+      flex: 1 1 250px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 9px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.98));
+      color: var(--text-main);
+    }
+
+    body.theme-light .search-box {
+      background: #ffffff;
+      box-shadow: 0 8px 16px rgba(15, 23, 42, 0.06);
+    }
+
+    .search-icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      border: 2px solid var(--accent);
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .search-icon::after {
+      content: "";
+      position: absolute;
+      width: 7px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--accent);
+      transform: rotate(40deg);
+      transform-origin: left center;
+      right: -3px;
+      bottom: -1px;
+    }
+
+    .search-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--text-main);
+      font-size: 13px;
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .filter-select {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background:
+        radial-gradient(circle at top left, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.98)),
+        linear-gradient(45deg, transparent 50%, rgba(148, 163, 184, 0.9) 50%),
+        linear-gradient(135deg, rgba(148, 163, 184, 0.9) 50%, transparent 50%);
+      color: var(--text-main);
+      padding: 6px 26px 6px 10px;
+      font-size: 12px;
+      appearance: none;
+      background-repeat: no-repeat;
+      background-position:
+        0 0,
+        calc(100% - 12px) 52%,
+        calc(100% - 8px) 52%;
+      background-size:
+        100% 100%,
+        6px 5px,
+        6px 5px;
+    }
+
+    body.theme-light .filter-select {
+      background:
+        radial-gradient(circle at top left, rgba(249, 250, 251, 0.98), rgba(255, 255, 255, 1)),
+        linear-gradient(45deg, transparent 50%, rgba(148, 163, 184, 0.9) 50%),
+        linear-gradient(135deg, rgba(148, 163, 184, 0.9) 50%, transparent 50%);
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+    }
+
+    .stats-text {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 900px) {
+      .stats-text {
+        margin-left: 0;
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .filter-row {
+        justify-content: space-between;
+      }
+      .stats-text {
+        margin-top: 2px;
+      }
+    }
+
+    /* ============= 书籍分区 & 卡片布局 ============= */
+    .section {
+      margin-bottom: 22px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 620;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-main);
+    }
+
+    .section-pill {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    body.theme-light .section-pill {
+      background: rgba(255, 255, 255, 0.96);
+    }
+
+    .section-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 10px;
+    }
+
+    @media (min-width: 1280px) {
+      .cards-grid {
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .cards-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .book-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 1));
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow: 0 12px 22px rgba(15, 23, 42, 0.85);
+      padding: 9px 10px 8px;
+      display: flex;
+      flex-direction: column;
+      transition: transform var(--transition-med), box-shadow var(--transition-med), border-color var(--transition-med), background var(--transition-med);
+      overflow: hidden;
+    }
+
+    body.theme-light .book-card {
+      background: #ffffff;
+      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.12);
+    }
+
+    .book-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.16), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.10), transparent 55%);
+      opacity: 0;
+      transition: opacity var(--transition-med);
+      pointer-events: none;
+    }
+
+    .book-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-card);
+      border-color: rgba(56, 189, 248, 0.85);
+    }
+
+    body.theme-light .book-card:hover {
+      border-color: rgba(37, 99, 235, 0.8);
+    }
+
+    .book-card:hover::before {
+      opacity: 1;
+    }
+
+    .book-title {
+      font-size: 13px;
+      font-weight: 620;
+      margin-bottom: 3px;
+      color: var(--text-main);
+    }
+
+    .book-meta {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+    }
+
+    .level-badge {
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.86);
+      color: var(--text-muted);
+    }
+
+    body.theme-light .level-badge {
+      background: rgba(249, 250, 251, 0.95);
+      color: #4b5563;
+    }
+
+    .tag-chip {
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.86);
+    }
+
+    body.theme-light .tag-chip {
+      background: #f9fafb;
+      color: #6b7280;
+    }
+
+    .book-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 6px;
+      min-height: 32px;
+    }
+
+    .book-footer {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(56, 189, 248, 0.85);
+      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.34), rgba(15, 23, 42, 0.98));
+      color: #e0f2fe;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.46);
+      white-space: nowrap;
+    }
+
+    body.theme-light .download-btn {
+      border-color: rgba(37, 99, 235, 0.9);
+      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.18), #ffffff);
+      color: #1d4ed8;
+      box-shadow: 0 0 10px rgba(37, 99, 235, 0.35);
+    }
+
+    .download-btn:hover {
+      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.45), rgba(8, 47, 73, 0.98));
+      transform: translateY(-1px);
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.7);
+    }
+
+    body.theme-light .download-btn:hover {
+      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.3), #eff6ff);
+    }
+
+    .download-icon {
+      width: 13px;
+      height: 13px;
+      border-radius: 4px;
+      border: 1px solid rgba(15, 23, 42, 0.9);
+      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    body.theme-light .download-icon {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      border-color: rgba(15, 23, 42, 0.6);
+    }
+
+    .download-icon::before {
+      content: "";
+      position: absolute;
+      width: 6px;
+      height: 2px;
+      border-radius: 999px;
+      background: #e0f2fe;
+      top: 3px;
+      left: 3px;
+    }
+
+    .download-icon::after {
+      content: "";
+      position: absolute;
+      border-left: 2px solid #e0f2fe;
+      border-bottom: 2px solid #e0f2fe;
+      width: 5px;
+      height: 5px;
+      transform: rotate(-45deg);
+      left: 4px;
+      bottom: 3px;
+    }
+
+    .code-badge {
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px dashed rgba(148, 163, 184, 0.7);
+      color: var(--text-muted);
+    }
+
+    body.theme-light .code-badge {
+      background: #f9fafb;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* ============= 底部 ============= */
+    .footer {
+      border-top: 1px solid rgba(148, 163, 184, 0.3);
+      margin-top: auto;
+      background: var(--footer-bg);
+      transition: background var(--transition-med), border-color var(--transition-med);
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 10px 14px 14px;
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    @media (min-width: 768px) {
+      .footer-inner {
+        padding: 12px 18px 16px;
+      }
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-note {
+      max-width: 900px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 720px) {
+      .footer-links {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body class="theme-dark">
+<div class="page">
+  <!-- 顶部导航 -->
+  <header class="top-nav">
+    <div class="top-nav-inner">
+      <div class="brand">
+        <div class="brand-logo"></div>
+        <div>
+          <div class="brand-text-title">AI 全栈学习资料库</div>
+          <div class="brand-text-sub">AI · ML · DL · TensorFlow · CV · NLP</div>
+        </div>
+      </div>
+      <div class="nav-right">
+        <div class="nav-pill">个人学习 &amp; 内部分享</div>
+        <div class="nav-badge">
+          <span class="nav-badge-dot"></span>
+          <span>持续补充中</span>
+        </div>
+        <!-- 亮度切换按钮：浅色 / 深色 -->
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换浅色 / 深色模式">
+          <span class="theme-toggle-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-width">
+    <!-- 头部简介 -->
+    <section class="hero">
+      <div class="hero-layout">
+        <div>
+          <h1 class="hero-title">
+            让 <span class="highlight">AI / 机器学习 / 深度学习</span><br />
+            相关书籍变成可浏览的<strong>在线知识库</strong>
+          </h1>
+          <p class="hero-subtitle">
+            将分散在网盘里的人工智能资料，整理成按方向、按阶段可筛选的可视化书库。
+            适合自己复习查找，也方便分享给同学、同事一起系统学习。
+          </p>
+          <div class="hero-tags">
+            <span class="hero-tag">📚 人工智能 · 机器学习 · 深度学习</span>
+            <span class="hero-tag">🧠 数学 · 统计学习 · 算法理论</span>
+            <span class="hero-tag">🧾 NLP / CV / 推荐系统 / 区块链</span>
+          </div>
+          <p class="hero-tip">
+            用法：按书名搜索 + 按方向筛选，点击「百度网盘下载」即可；需要时只要把 <code>链接：XXXX</code> 替换为你自己的网盘链接即可。
+          </p>
+        </div>
+
+        <aside class="hero-aside">
+          <div class="hero-aside-header">
+            <div class="hero-aside-title">当前书单概览</div>
+            <div class="hero-aside-badge">v1 · 可自由扩展</div>
+          </div>
+          <div class="hero-aside-grid">
+            <div class="hero-aside-item">
+              <div class="hero-aside-item-label">收录书籍</div>
+              <div class="hero-aside-item-value" id="stats-books-count">16 本</div>
+            </div>
+            <div class="hero-aside-item">
+              <div class="hero-aside-item-label">方向覆盖</div>
+              <div class="hero-aside-item-value">ML / DL / NLP / CV / 推荐 / 区块链</div>
+            </div>
+            <div class="hero-aside-item">
+              <div class="hero-aside-item-label">学习阶段</div>
+              <div class="hero-aside-item-value">入门 · 进阶 · 实战 · 理论</div>
+            </div>
+            <div class="hero-aside-item">
+              <div class="hero-aside-item-label">筛选体验</div>
+              <div class="hero-aside-item-value">搜索 + 方向标签</div>
+            </div>
+          </div>
+          <div class="hero-aside-foot">
+            <span>你可以随时在代码中追加更多书籍。</span>
+            <span class="hero-aside-pill">前端 + 设计一体化布局</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 搜索 & 筛选 -->
+    <section class="controls" aria-label="筛选区域">
+      <div class="search-box">
+        <div class="search-icon" aria-hidden="true"></div>
+        <input
+          type="search"
+          id="searchInput"
+          class="search-input"
+          placeholder="按书名关键字搜索，例如：机器学习 / TensorFlow / 推荐系统..."
+        />
+      </div>
+
+      <div class="filter-row">
+        <span class="filter-label">按方向筛选：</span>
+        <select id="directionFilter" class="filter-select">
+          <option value="all">全部方向</option>
+          <option value="机器学习">机器学习</option>
+          <option value="深度学习">深度学习</option>
+          <option value="TensorFlow">TensorFlow</option>
+          <option value="自然语言处理">自然语言处理 NLP</option>
+          <option value="计算机视觉">计算机视觉 / 图像处理</option>
+          <option value="推荐系统">推荐系统</option>
+          <option value="数学">数学 / 统计学习</option>
+          <option value="区块链">区块链</option>
+        </select>
+      </div>
+
+      <div class="stats-text" id="statsVisible">
+        当前显示：<strong><span id="visibleCount">16</span></strong> / <span id="totalCount">16</span> 本
+      </div>
+    </section>
+
+    <!-- 书籍列表容器（由 JavaScript 渲染） -->
+    <section id="sectionsContainer" aria-label="书籍分区展示"></section>
+  </main>
+
+  <!-- 底部 -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-links">
+        <div>© <span id="yearSpan"></span> AI 全栈学习资料库</div>
+        <div>Personal AI Learning Library · For Study &amp; Research Only</div>
+      </div>
+      <div class="footer-note">
+        免责声明：本页面仅用于个人学习与技术交流，所列电子书链接来源于个人整理与网络公开资源，不对内容版权做任何主张。
+        如有侵权，请在原分享平台联系删除或修改链接。请在遵守所在地区法律法规和版权政策的前提下使用本页资料。
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // ===============================
+  // 书籍数据配置区域
+  // ===============================
+  // 提示：如果有更多书，按下面对象数组的格式往下追加即可。
+  const books = [
+    {
+      title: "机器学习 周志华",
+      fileName: "机器学习 周志华.pdf",
+      level: "进阶 / 理论",
+      category: "基础理论与机器学习",
+      tags: ["机器学习", "基础理论"],
+      link: "链接：XXXX", // 使用时替换 XXXX 为你自己的百度网盘链接
+      code: "wzst",
+      description: "系统介绍机器学习核心理论与方法，被广泛视为机器学习领域的权威教材。"
+    },
+    {
+      title: "推荐系统实践",
+      fileName: "推荐系统实践.pdf",
+      level: "实战",
+      category: "推荐系统",
+      tags: ["推荐系统", "机器学习"],
+      link: "链接：XXXX",
+      code: "te31",
+      description: "从工程实践角度讲解推荐算法、特征工程与系统实现，是入门推荐系统的经典读物。"
+    },
+    {
+      title: "自然语言处理综论",
+      fileName: "自然语言处理综论.pdf",
+      level: "进阶 / 理论",
+      category: "自然语言处理 NLP",
+      tags: ["自然语言处理", "NLP", "机器学习"],
+      link: "链接：XXXX",
+      code: "l3wl",
+      description: "系统梳理自然语言处理的基本任务、经典算法和理论框架，适合理解 NLP 整体版图。"
+    },
+    {
+      title: "计算机视觉：一种现代方法",
+      fileName: "计算机视觉：一种现代方法.pdf",
+      level: "进阶 / 理论",
+      category: "计算机视觉与图像处理",
+      tags: ["计算机视觉", "CV", "图像处理"],
+      link: "链接：XXXX",
+      code: "l3fb",
+      description: "从现代视角介绍计算机视觉的理论与方法，涵盖图像理解、识别与视觉模型。"
+    },
+    {
+      title: "图解机器学习",
+      fileName: "图解机器学习.pdf",
+      level: "入门",
+      category: "基础理论与机器学习",
+      tags: ["机器学习", "入门"],
+      link: "链接：XXXX",
+      code: "k59g",
+      description: "以图解和案例的方式解释机器学习概念，非常适合入门和快速扫盲。"
+    },
+    {
+      title: "决策知识自动化",
+      fileName: "决策知识自动化.pdf",
+      level: "进阶",
+      category: "人工智能通识与应用",
+      tags: ["人工智能", "机器学习"],
+      link: "链接：XXXX",
+      code: "bu7l",
+      description: "围绕企业和业务场景讲解如何用知识与算法实现决策自动化。"
+    },
+    {
+      title: "人工智能：一种现代的方法 (第3版)",
+      fileName: "人工智能：一种现代的方法(第3版).pdf",
+      level: "理论 / 通识",
+      category: "人工智能通识与应用",
+      tags: ["人工智能", "机器学习"],
+      link: "链接：XXXX",
+      code: "8iyo",
+      description: "覆盖搜索、规划、推理、学习等广泛主题的 AI 经典教材，被誉为“AI 圣经”。"
+    },
+    {
+      title: "Python 数据分析与挖掘实战",
+      fileName: "Python数据分析与挖掘实战.pdf",
+      level: "实战",
+      category: "数据分析与挖掘",
+      tags: ["数据分析", "机器学习", "实战"],
+      link: "链接：XXXX",
+      code: "gnzc",
+      description: "结合 Python 工具链，从数据预处理到建模与挖掘，适合做端到端实战项目。"
+    },
+    {
+      title: "机器学习导论",
+      fileName: "机器学习导论.pdf",
+      level: "入门 / 进阶",
+      category: "基础理论与机器学习",
+      tags: ["机器学习"],
+      link: "链接：XXXX",
+      code: "2wpg",
+      description: "对主要机器学习算法进行系统性介绍，适合作为入门与进阶的过渡读物。"
+    },
+    {
+      title: "面向机器智能的 TensorFlow 实践",
+      fileName: "面向机器智能的TensorFlow实践.pdf",
+      level: "实战",
+      category: "深度学习与 TensorFlow",
+      tags: ["深度学习", "TensorFlow"],
+      link: "链接：XXXX",
+      code: "03lo",
+      description: "以 TensorFlow 为工具，从案例出发实现机器学习与深度学习模型应用。"
+    },
+    {
+      title: "图像处理、分析与机器视觉（第三版）",
+      fileName: "图像处理、分析与机器视觉（第三版）.pdf",
+      level: "进阶 / 理论",
+      category: "计算机视觉与图像处理",
+      tags: ["计算机视觉", "CV", "图像处理"],
+      link: "链接：XXXX",
+      code: "104g",
+      description: "系统讲解图像处理、图像分析与机器视觉的基础理论与工程方法。"
+    },
+    {
+      title: "TensorFlow 实战（黄文坚）",
+      fileName: "TensorFlow实战_黄文坚.pdf",
+      level: "实战",
+      category: "深度学习与 TensorFlow",
+      tags: ["深度学习", "TensorFlow"],
+      link: "链接：XXXX",
+      code: "6syh",
+      description: "以实例驱动的方式介绍 TensorFlow，涵盖模型搭建、训练与部署实战。"
+    },
+    {
+      title: "TensorFlow 实战：Google 深度学习框架",
+      fileName: "Tensorflow 实战Google深度学习框架.pdf",
+      level: "实战",
+      category: "深度学习与 TensorFlow",
+      tags: ["深度学习", "TensorFlow"],
+      link: "链接：XXXX",
+      code: "ejj3",
+      description: "围绕 Google 的 TensorFlow 框架讲解深度学习模型构建与实战案例。"
+    },
+    {
+      title: "统计学习方法",
+      fileName: "统计学习方法.pdf",
+      level: "理论 / 进阶",
+      category: "基础理论与机器学习",
+      tags: ["统计学习", "机器学习", "数学"],
+      link: "链接：XXXX",
+      code: "zjme",
+      description: "从统计学习视角系统推导常见机器学习算法，是打牢理论基础的重要参考书。"
+    },
+    {
+      title: "数学之美",
+      fileName: "数学之美.pdf",
+      level: "入门 / 通识",
+      category: "基础理论与机器学习",
+      tags: ["数学", "自然语言处理", "NLP"],
+      link: "链接：XXXX",
+      code: "y7xe",
+      description: "用通俗易懂的方式讲解数学在搜索引擎、自然语言处理等中的应用。"
+    },
+    {
+      title: "区块链新经济概论",
+      fileName: "区块链新经济概论.pdf",
+      level: "入门",
+      category: "区块链与扩展阅读",
+      tags: ["区块链"],
+      link: "链接：XXXX",
+      code: "m35l",
+      description: "系统介绍区块链技术与新经济形态，为理解 Web3 与加密经济提供入门视角。"
+    }
+  ];
+
+  // ===============================
+  // 渲染逻辑
+  // ===============================
+
+  const sectionsContainer = document.getElementById("sectionsContainer");
+  const searchInput = document.getElementById("searchInput");
+  const directionFilter = document.getElementById("directionFilter");
+  const visibleCountSpan = document.getElementById("visibleCount");
+  const totalCountSpan = document.getElementById("totalCount");
+  const statsBooksCount = document.getElementById("stats-books-count");
+
+  totalCountSpan.textContent = books.length;
+  statsBooksCount.textContent = books.length + " 本";
+
+  // 将书籍按 category 分组
+  function groupByCategory(items) {
+    const map = new Map();
+    items.forEach((book) => {
+      const key = book.category || "其他";
+      if (!map.has(key)) {
+        map.set(key, []);
+      }
+      map.get(key).push(book);
+    });
+    return map;
+  }
+
+  // 根据分区名称给出简短说明
+  function getSectionDesc(category) {
+    if (category.includes("基础理论")) {
+      return "打牢数学、统计与机器学习基础，为后续深度学习与工程实践铺路。";
+    }
+    if (category.includes("人工智能通识")) {
+      return "整体了解人工智能领域的全景与主流方向，建立系统化认知。";
+    }
+    if (category.includes("深度学习")) {
+      return "围绕深度学习与 TensorFlow 框架，从理论到工程实践进行学习。";
+    }
+    if (category.includes("自然语言处理")) {
+      return "聚焦文本与语言相关任务，如分词、句法分析、文本分类、对话等。";
+    }
+    if (category.includes("计算机视觉")) {
+      return "从图像处理、分析到机器视觉与 CV 任务，理解如何让机器“看懂”世界。";
+    }
+    if (category.includes("推荐系统")) {
+      return "学习推荐系统算法与工程实践，理解“千人千面”的实现原理。";
+    }
+    if (category.includes("数据分析")) {
+      return "用 Python 工具链完成数据分析与挖掘项目，实现端到端实践。";
+    }
+    if (category.includes("区块链")) {
+      return "面向未来扩展的区块链与新经济阅读，对 AI+区块链场景有更全面思考。";
+    }
+    return "该分区汇总了所在方向的代表性书籍，建议按从易到难逐本进阶。";
+  }
+
+  // 渲染所有分区和卡片
+  function renderSections() {
+    const grouped = groupByCategory(books);
+    sectionsContainer.innerHTML = "";
+
+    grouped.forEach((list, category) => {
+      const sectionEl = document.createElement("section");
+      sectionEl.className = "section";
+
+      const headerEl = document.createElement("div");
+      headerEl.className = "section-header";
+
+      const titleEl = document.createElement("div");
+      titleEl.className = "section-title";
+      titleEl.innerHTML = `<span>📘 ${category}</span>`;
+
+      const pillEl = document.createElement("div");
+      pillEl.className = "section-pill";
+      pillEl.textContent = `收录 ${list.length} 本`;
+
+      headerEl.appendChild(titleEl);
+      headerEl.appendChild(pillEl);
+
+      const descEl = document.createElement("div");
+      descEl.className = "section-desc";
+      descEl.textContent = getSectionDesc(category);
+
+      const gridEl = document.createElement("div");
+      gridEl.className = "cards-grid";
+
+      list.forEach((book) => {
+        const cardEl = document.createElement("article");
+        cardEl.className = "book-card";
+        cardEl.dataset.title = (book.title || "").toLowerCase();
+        cardEl.dataset.tags = (book.tags || []).join(",");
+
+        const titleNode = document.createElement("h3");
+        titleNode.className = "book-title";
+        titleNode.textContent = book.fileName || book.title;
+
+        const metaEl = document.createElement("div");
+        metaEl.className = "book-meta";
+
+        const levelSpan = document.createElement("span");
+        levelSpan.className = "level-badge";
+        levelSpan.textContent = book.level || "阶段未标注";
+        metaEl.appendChild(levelSpan);
+
+        (book.tags || []).forEach((tag) => {
+          const tagEl = document.createElement("span");
+          tagEl.className = "tag-chip";
+          tagEl.textContent = tag;
+          metaEl.appendChild(tagEl);
+        });
+
+        const descNode = document.createElement("p");
+        descNode.className = "book-desc";
+        descNode.textContent =
+          book.description ||
+          "本书暂无简介，可根据书名与目录内容自行补充一两句说明。";
+
+        const footerEl = document.createElement("div");
+        footerEl.className = "book-footer";
+
+        const linkBtn = document.createElement("a");
+        linkBtn.className = "download-btn";
+        // 说明：这里 href 用占位符，实际使用时在 HTML 里把“链接：XXXX”替换为真实网盘地址即可。
+        linkBtn.href = "javascript:void(0);";
+        linkBtn.title = "使用时请在代码中替换为你自己的百度网盘链接";
+        linkBtn.innerHTML = `
+          <span class="download-icon" aria-hidden="true"></span>
+          <span>百度网盘下载</span>
+        `;
+
+        const codeBadge = document.createElement("span");
+        codeBadge.className = "code-badge";
+        codeBadge.textContent = `提取码：${book.code || "无"}`;
+
+        footerEl.appendChild(linkBtn);
+        footerEl.appendChild(codeBadge);
+
+        cardEl.appendChild(titleNode);
+        cardEl.appendChild(metaEl);
+        cardEl.appendChild(descNode);
+        cardEl.appendChild(footerEl);
+
+        gridEl.appendChild(cardEl);
+      });
+
+      sectionEl.appendChild(headerEl);
+      sectionEl.appendChild(descEl);
+      sectionEl.appendChild(gridEl);
+
+      sectionsContainer.appendChild(sectionEl);
+    });
+
+    // 初始化可见数量
+    updateVisibleCount();
+  }
+
+  // 根据搜索和方向筛选，控制卡片显示/隐藏
+  function applyFilters() {
+    const searchValue = (searchInput.value || "").trim().toLowerCase();
+    const dirValue = directionFilter.value;
+    const cards = sectionsContainer.querySelectorAll(".book-card");
+
+    cards.forEach((card) => {
+      const title = card.dataset.title || "";
+      const tags = card.dataset.tags || "";
+
+      const matchSearch = !searchValue || title.includes(searchValue);
+      const matchDirection =
+        dirValue === "all" || (tags && tags.indexOf(dirValue) !== -1);
+
+      if (matchSearch && matchDirection) {
+        card.classList.remove("hidden");
+      } else {
+        card.classList.add("hidden");
+      }
+    });
+
+    updateVisibleCount();
+  }
+
+  // 更新可见卡片数量
+  function updateVisibleCount() {
+    const cards = sectionsContainer.querySelectorAll(".book-card");
+    let visible = 0;
+    cards.forEach((card) => {
+      if (!card.classList.contains("hidden")) visible += 1;
+    });
+    visibleCountSpan.textContent = visible;
+  }
+
+  searchInput.addEventListener("input", applyFilters);
+  directionFilter.addEventListener("change", applyFilters);
+
+  renderSections();
+
+  // 底部年份
+  document.getElementById("yearSpan").textContent =
+    new Date().getFullYear().toString();
+
+  // ===============================
+  // 主题切换（浅色 / 深色）逻辑
+  // ===============================
+  const themeToggleBtn = document.getElementById("themeToggle");
+  const THEME_KEY = "ai-learning-theme";
+
+  // 从 localStorage / 系统偏好中推断默认主题
+  function detectPreferredTheme() {
+    const saved = window.localStorage.getItem(THEME_KEY);
+    if (saved === "light" || saved === "dark") return saved;
+
+    // 没有保存时，尊重系统 prefers-color-scheme 设置
+    if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
+      return "light";
+    }
+    return "dark";
+  }
+
+  function applyTheme(theme) {
+    if (theme === "light") {
+      document.body.classList.remove("theme-dark");
+      document.body.classList.add("theme-light");
+    } else {
+      document.body.classList.remove("theme-light");
+      document.body.classList.add("theme-dark");
+    }
+  }
+
+  // 初始化主题
+  const initialTheme = detectPreferredTheme();
+  applyTheme(initialTheme);
+
+  // 点击按钮切换主题并持久化
+  themeToggleBtn.addEventListener("click", () => {
+    const isCurrentlyDark = document.body.classList.contains("theme-dark");
+    const nextTheme = isCurrentlyDark ? "light" : "dark";
+    applyTheme(nextTheme);
+    window.localStorage.setItem(THEME_KEY, nextTheme);
+  });
+</script>
+</body>
+</html>
+
+
