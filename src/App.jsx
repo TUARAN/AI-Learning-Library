@@ -27,6 +27,8 @@ const books = [
   {
     title: '自然语言处理综论',
     fileName: '《自然语言处理综论》.pdf',
+    folderName: '自然语言处理综论',
+    parts: 7,
     level: '进阶 / 理论',
     category: '自然语言处理 NLP',
     tags: ['自然语言处理', 'NLP', '机器学习'],
@@ -147,6 +149,8 @@ const books = [
   {
     title: '数学之美',
     fileName: '数学之美.pdf',
+    folderName: '数学之美',
+    parts: 3,
     level: '入门 / 通识',
     category: '基础理论与机器学习',
     tags: ['数学', '自然语言处理', 'NLP'],
@@ -157,6 +161,8 @@ const books = [
   {
     title: '区块链新经济概论',
     fileName: '区块链新经济概论.pdf',
+    folderName: '区块链新经济概论',
+    parts: 3,
     level: '入门',
     category: '区块链与扩展阅读',
     tags: ['区块链'],
@@ -239,10 +245,20 @@ const availablePdfs = new Set([
   '数学之美.pdf'
 ]);
 
+function Toast({ message, visible }) {
+  if (!visible) return null;
+  return (
+    <div className="toast-container">
+      <div className="toast-message">{message}</div>
+    </div>
+  );
+}
+
 function App() {
   const [search, setSearch] = useState('');
   const [direction, setDirection] = useState('all');
   const [theme, setTheme] = useState(() => detectPreferredTheme());
+  const [toast, setToast] = useState({ show: false, message: '' });
 
   // 应用主题到 body，并持久化
   useEffect(() => {
@@ -251,6 +267,27 @@ function App() {
       window.localStorage.setItem(THEME_KEY, theme);
     }
   }, [theme]);
+
+  const showToast = (message) => {
+    setToast({ show: true, message });
+    setTimeout(() => setToast({ show: false, message: '' }), 3000);
+  };
+
+  const handleDownload = (e, link, code) => {
+    e.preventDefault();
+    if (code) {
+      navigator.clipboard.writeText(code).then(() => {
+        showToast(`提取码 ${code} 已复制，正在跳转...`);
+        setTimeout(() => {
+          window.open(link, '_blank');
+        }, 1000);
+      }).catch(() => {
+        window.open(link, '_blank');
+      });
+    } else {
+      window.open(link, '_blank');
+    }
+  };
 
   const grouped = useMemo(() => groupByCategory(books), []);
 
@@ -281,6 +318,7 @@ function App() {
 
   return (
     <div className="page">
+      <Toast message={toast.message} visible={toast.show} />
       {/* 顶部导航 */}
       <header className="top-nav">
         <div className="top-nav-inner">
@@ -479,20 +517,24 @@ function App() {
                         <div className="book-footer">
                           <div className="footer-btns">
                             {isSplit ? (
-                              <div className="split-preview-group">
-                                <span className="split-label">在线预览:</span>
-                                {Array.from({ length: book.parts }).map((_, i) => (
-                                  <a
-                                    key={i}
-                                    className="preview-btn-mini"
-                                    href={`/pdf/${book.folderName}/${book.folderName}-${i + 1}.pdf`}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    title={`预览第 ${i + 1} 部分`}
-                                  >
-                                    卷{i + 1}
-                                  </a>
-                                ))}
+                              <div className="split-preview-dropdown">
+                                <button className="preview-btn dropdown-trigger" type="button">
+                                  <span>在线预览 ({book.parts}卷)</span>
+                                  <span className="dropdown-arrow">▼</span>
+                                </button>
+                                <div className="dropdown-menu">
+                                  {Array.from({ length: book.parts }).map((_, i) => (
+                                    <a
+                                      key={i}
+                                      className="dropdown-item"
+                                      href={`/pdf/${book.folderName}/${book.folderName}-${i + 1}.pdf`}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                    >
+                                      第 {i + 1} 卷
+                                    </a>
+                                  ))}
+                                </div>
                               </div>
                             ) : (
                               <a
@@ -512,6 +554,7 @@ function App() {
                               target="_blank"
                               rel="noreferrer"
                               title="前往百度网盘下载本书"
+                              onClick={(e) => handleDownload(e, book.link, book.code)}
                             >
                               <span
                                 className="download-icon"
