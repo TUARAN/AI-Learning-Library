@@ -1163,4 +1163,35 @@ body.theme-light .toast-message {
   to { transform: translate(-50%, 0); opacity: 1; }
 }
 
+.nav-highlight-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  margin-right: 6px;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 8px rgba(56, 189, 248, 0.3);
+}
+
+body.theme-light .nav-highlight-btn {
+  background: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+}
+
+.nav-highlight-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.5);
+  filter: brightness(1.1);
+}
+
+body.theme-light .nav-highlight-btn:hover {
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
 
