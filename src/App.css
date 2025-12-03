@@ -1077,7 +1077,7 @@ body.theme-light .preview-btn-mini:hover {
 }
 
 .dropdown-menu {
-  display: none;
+  display: flex;
   position: absolute;
   bottom: 100%;
   left: 0;
@@ -1091,12 +1091,30 @@ body.theme-light .preview-btn-mini:hover {
   margin-bottom: 6px;
   flex-direction: column;
   gap: 2px;
-  animation: fadeIn 0.15s ease-out;
+  
+  /* Hidden state with transition support */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  
+  /* Delay hiding to allow moving mouse to menu (0.3s delay + 0.2s fade) */
+  transition: 
+    opacity 0.2s ease-in 0.3s,
+    transform 0.2s ease-in 0.3s,
+    visibility 0s linear 0.5s;
 }
 
 .split-preview-dropdown:hover .dropdown-menu,
 .split-preview-dropdown:focus-within .dropdown-menu {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  
+  /* Show immediately */
+  transition: 
+    opacity 0.15s ease-out,
+    transform 0.15s ease-out,
+    visibility 0s;
 }
 
 .dropdown-item {
