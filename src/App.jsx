@@ -5,6 +5,8 @@ const books = [
   {
     title: '机器学习 周志华',
     fileName: '机器学习+周志华.pdf',
+    folderName: '机器学习+周志华',
+    parts: 5,
     level: '进阶 / 理论',
     category: '基础理论与机器学习',
     tags: ['机器学习', '基础理论'],
@@ -225,16 +227,16 @@ function getSectionDesc(category) {
 
 // 已上传 PDF 的文件列表（用于控制预览按钮显示）
 const availablePdfs = new Set([
-  // '机器学习+周志华.pdf', // 文件过大 (>25MB)，暂时禁用预览
+  '机器学习+周志华.pdf', // 实际上是文件夹，但为了兼容逻辑，这里保留，具体逻辑在渲染时处理
   '推荐系统实践.pdf',
   '《计算机视觉：一种现代方法》.pdf',
   '《决策知识自动化》.pdf',
   '人工智能：一种现代的方法（第３版）.pdf',
   '面向机器智能的TensorFlow实践+(智能系统与技术丛书)_.pdf',
   '统计学习方法.pdf',
-  // '《自然语言处理综论》.pdf', // 文件过大 (>25MB)，暂时禁用预览
-  // '区块链新经济概论.pdf', // 文件过大 (>25MB)，暂时禁用预览
-  // '数学之美.pdf' // 文件过大 (>25MB)，暂时禁用预览
+  '《自然语言处理综论》.pdf',
+  '区块链新经济概论.pdf',
+  '数学之美.pdf'
 ]);
 
 function App() {
@@ -450,6 +452,8 @@ function App() {
                       tags.some((t) => t.includes(direction));
                     const hidden = !(matchSearch && matchDirection);
                     const hasPreview = availablePdfs.has(book.fileName);
+                    const isSplit = !!book.parts;
+
                     return (
                       <article
                         key={book.fileName}
@@ -474,16 +478,34 @@ function App() {
                         </p>
                         <div className="book-footer">
                           <div className="footer-btns">
-                            <a
-                              className={`preview-btn ${!hasPreview ? 'disabled' : ''}`}
-                              href={hasPreview ? `/pdf/${book.fileName}` : undefined}
-                              target={hasPreview ? '_blank' : undefined}
-                              rel={hasPreview ? 'noreferrer' : undefined}
-                              title={hasPreview ? '在线预览本书' : '暂无预览资源'}
-                              onClick={!hasPreview ? (e) => e.preventDefault() : undefined}
-                            >
-                              <span>{hasPreview ? '在线预览' : '暂无预览'}</span>
-                            </a>
+                            {isSplit ? (
+                              <div className="split-preview-group">
+                                <span className="split-label">在线预览:</span>
+                                {Array.from({ length: book.parts }).map((_, i) => (
+                                  <a
+                                    key={i}
+                                    className="preview-btn-mini"
+                                    href={`/pdf/${book.folderName}/${book.folderName}-${i + 1}.pdf`}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    title={`预览第 ${i + 1} 部分`}
+                                  >
+                                    {i + 1}
+                                  </a>
+                                ))}
+                              </div>
+                            ) : (
+                              <a
+                                className={`preview-btn ${!hasPreview ? 'disabled' : ''}`}
+                                href={hasPreview ? `/pdf/${book.fileName}` : undefined}
+                                target={hasPreview ? '_blank' : undefined}
+                                rel={hasPreview ? 'noreferrer' : undefined}
+                                title={hasPreview ? '在线预览本书' : '暂无预览资源'}
+                                onClick={!hasPreview ? (e) => e.preventDefault() : undefined}
+                              >
+                                <span>{hasPreview ? '在线预览' : '暂无预览'}</span>
+                              </a>
+                            )}
                             <a
                               className="download-btn"
                               href={book.link}
