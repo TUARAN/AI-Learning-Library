@@ -490,7 +490,7 @@ function App() {
                                     rel="noreferrer"
                                     title={`预览第 ${i + 1} 部分`}
                                   >
-                                    {i + 1}
+                                    卷{i + 1}
                                   </a>
                                 ))}
                               </div>
