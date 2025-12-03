@@ -81,6 +81,8 @@ const books = [
   {
     title: 'Python 数据分析与挖掘实战',
     fileName: 'Python数据分析与挖掘实战.pdf',
+    folderName: 'Python数据分析与挖掘实战',
+    parts: 4,
     level: '实战',
     category: '数据分析与挖掘',
     tags: ['数据分析', '机器学习', '实战'],
@@ -113,6 +115,8 @@ const books = [
   {
     title: '图像处理、分析与机器视觉（第三版）',
     fileName: '图像处理、分析与机器视觉（第三版）.pdf',
+    folderName: '图像处理、分析与机器视觉',
+    parts: 7,
     level: '进阶 / 理论',
     category: '计算机视觉与图像处理',
     tags: ['计算机视觉', 'CV', '图像处理'],
@@ -251,7 +255,9 @@ const availablePdfs = new Set([
   '数学之美.pdf',
   '图解机器学习.pdf',
   '机器学习导论.pdf',
-  'Tensorflow 实战Google深度学习框架.pdf'
+  'Tensorflow 实战Google深度学习框架.pdf',
+  'Python数据分析与挖掘实战.pdf',
+  '图像处理、分析与机器视觉（第三版）.pdf'
 ]);
 
 function Toast({ message, visible }) {
