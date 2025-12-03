@@ -340,8 +340,8 @@ function App() {
           <div className="brand">
             <div className="brand-logo" />
             <div>
-              <div className="brand-text-title">安东尼学AI</div>
-              <div className="brand-text-sub">AI · ML · DL · TensorFlow · CV · NLP</div>
+              <div className="brand-text-title">AI 书库</div>
+              <div className="brand-text-sub">安东尼学AI · 个人精选</div>
             </div>
           </div>
           <div className="nav-right">
