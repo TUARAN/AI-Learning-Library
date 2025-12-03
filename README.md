@@ -1,5 +1,7 @@
 # 📘 AI 全栈学习资料库 (AI Learning Library)
 
+🚀 **在线访问：[https://matrix-ai-pdfs.pages.dev/](https://matrix-ai-pdfs.pages.dev/)**
+
 > **让 AI / 机器学习 / 深度学习相关书籍变成可浏览、可检索的在线知识库。**
 
 ## 💡 设计理念
