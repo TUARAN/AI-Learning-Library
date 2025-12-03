@@ -49,6 +49,8 @@ const books = [
   {
     title: '图解机器学习',
     fileName: '图解机器学习.pdf',
+    folderName: '图解机器学习',
+    parts: 3,
     level: '入门',
     category: '基础理论与机器学习',
     tags: ['机器学习', '入门'],
@@ -89,6 +91,8 @@ const books = [
   {
     title: '机器学习导论',
     fileName: '机器学习导论.pdf',
+    folderName: '机器学习导论',
+    parts: 6,
     level: '入门 / 进阶',
     category: '基础理论与机器学习',
     tags: ['机器学习'],
@@ -129,6 +133,8 @@ const books = [
   {
     title: 'TensorFlow 实战：Google 深度学习框架',
     fileName: 'Tensorflow 实战Google深度学习框架.pdf',
+    folderName: 'Tensorflow 实战Google深度学习框架',
+    parts: 3,
     level: '实战',
     category: '深度学习与 TensorFlow',
     tags: ['深度学习', 'TensorFlow'],
@@ -242,7 +248,10 @@ const availablePdfs = new Set([
   '统计学习方法.pdf',
   '《自然语言处理综论》.pdf',
   '区块链新经济概论.pdf',
-  '数学之美.pdf'
+  '数学之美.pdf',
+  '图解机器学习.pdf',
+  '机器学习导论.pdf',
+  'Tensorflow 实战Google深度学习框架.pdf'
 ]);
 
 function Toast({ message, visible }) {
