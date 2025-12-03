@@ -563,9 +563,6 @@ function App() {
                               <span>网盘下载</span>
                             </a>
                           </div>
-                          <span className="code-badge">
-                            码：{book.code || '无'}
-                          </span>
                         </div>
                       </article>
                     );

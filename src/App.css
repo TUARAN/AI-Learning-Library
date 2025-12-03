@@ -870,18 +870,6 @@ body.theme-light .download-icon {
   bottom: 3px;
 }
 
-.code-badge {
-  padding: 2px 6px;
-  border-radius: 999px;
-  background: rgba(15, 23, 42, 0.8);
-  border: 1px dashed rgba(148, 163, 184, 0.7);
-  color: var(--text-muted);
-}
-
-body.theme-light .code-badge {
-  background: #f9fafb;
-}
-
 .hidden {
   display: none !important;
 }
