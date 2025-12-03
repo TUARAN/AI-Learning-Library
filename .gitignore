@@ -6,3 +6,4 @@ dist-ssr
 .npmrc
 yarn.lock
 package-lock.json
+large_pdfs_backup/

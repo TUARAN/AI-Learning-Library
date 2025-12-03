@@ -24,7 +24,7 @@ const books = [
   },
   {
     title: '自然语言处理综论',
-    fileName: '自然语言处理综论.pdf',
+    fileName: '《自然语言处理综论》.pdf',
     level: '进阶 / 理论',
     category: '自然语言处理 NLP',
     tags: ['自然语言处理', 'NLP', '机器学习'],
@@ -225,13 +225,16 @@ function getSectionDesc(category) {
 
 // 已上传 PDF 的文件列表（用于控制预览按钮显示）
 const availablePdfs = new Set([
-  '机器学习+周志华.pdf',
+  // '机器学习+周志华.pdf', // 文件过大 (>25MB)，暂时禁用预览
   '推荐系统实践.pdf',
   '《计算机视觉：一种现代方法》.pdf',
   '《决策知识自动化》.pdf',
   '人工智能：一种现代的方法（第３版）.pdf',
   '面向机器智能的TensorFlow实践+(智能系统与技术丛书)_.pdf',
-  '统计学习方法.pdf'
+  '统计学习方法.pdf',
+  // '《自然语言处理综论》.pdf', // 文件过大 (>25MB)，暂时禁用预览
+  // '区块链新经济概论.pdf', // 文件过大 (>25MB)，暂时禁用预览
+  // '数学之美.pdf' // 文件过大 (>25MB)，暂时禁用预览
 ]);
 
 function App() {
@@ -297,7 +300,7 @@ function App() {
             </a>
             <a
               className="nav-icon-link"
-              href="#"
+              href="https://github.com/TUARAN/AI-Learning-Library"
               target="_blank"
               rel="noreferrer"
               aria-label="GitHub 仓库"
