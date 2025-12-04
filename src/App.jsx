@@ -127,6 +127,8 @@ const books = [
   {
     title: 'TensorFlow 实战（黄文坚）',
     fileName: 'TensorFlow实战_黄文坚（完整）.pdf',
+    folderName: 'TensorFlow实战_黄文坚（完整）',
+    parts: 6,
     level: '实战',
     category: '深度学习与 TensorFlow',
     tags: ['深度学习', 'TensorFlow'],
@@ -257,7 +259,8 @@ const availablePdfs = new Set([
   '机器学习导论.pdf',
   'Tensorflow 实战Google深度学习框架.pdf',
   'Python数据分析与挖掘实战.pdf',
-  '图像处理、分析与机器视觉（第三版）.pdf'
+  '图像处理、分析与机器视觉（第三版）.pdf',
+  'TensorFlow实战_黄文坚（完整）.pdf'
 ]);
 
 function Toast({ message, visible }) {
@@ -487,6 +490,20 @@ function App() {
         <section id="sectionsContainer" aria-label="书籍分区展示">
           {Array.from(grouped.entries()).map(([category, list]) => {
             const desc = getSectionDesc(category);
+            // Filter books in this category that match search/direction
+            const visibleBooks = list.filter((book) => {
+              const titleLc = (book.title || '').toLowerCase();
+              const tags = book.tags || [];
+              const matchSearch = !keyword || titleLc.includes(keyword);
+              const matchDirection =
+                direction === 'all' ||
+                tags.some((t) => t.includes(direction));
+              return matchSearch && matchDirection;
+            });
+            
+            // Hide entire category if no books match
+            if (visibleBooks.length === 0) return null;
+            
             return (
               <section key={category} className="section">
                 <div className="section-header">
@@ -497,21 +514,14 @@ function App() {
                 </div>
                 <div className="section-desc">{desc}</div>
                 <div className="cards-grid">
-                  {list.map((book) => {
-                    const titleLc = (book.title || '').toLowerCase();
-                    const tags = book.tags || [];
-                    const matchSearch = !keyword || titleLc.includes(keyword);
-                    const matchDirection =
-                      direction === 'all' ||
-                      tags.some((t) => t.includes(direction));
-                    const hidden = !(matchSearch && matchDirection);
+                  {visibleBooks.map((book) => {
                     const hasPreview = availablePdfs.has(book.fileName);
                     const isSplit = !!book.parts;
 
                     return (
                       <article
                         key={book.fileName}
-                        className={`book-card${hidden ? ' hidden' : ''}`}
+                        className="book-card"
                       >
                         <h3 className="book-title">
                           {book.fileName || book.title}
@@ -520,7 +530,7 @@ function App() {
                           <span className="level-badge">
                             {book.level || '阶段未标注'}
                           </span>
-                          {tags.map((tag) => (
+                          {(book.tags || []).map((tag) => (
                             <span key={tag} className="tag-chip">
                               {tag}
                             </span>
