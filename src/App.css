@@ -1212,5 +1212,342 @@ body.theme-light .nav-highlight-btn:hover {
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
 }
 
+/* ============= 导航链接按钮 ============= */
+.nav-link-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: all var(--transition-fast);
+}
 
+.nav-link-btn:hover {
+  background: rgba(56, 189, 248, 0.25);
+  transform: translateY(-1px);
+}
 
+.nav-link-btn.active {
+  background: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(56, 189, 248, 0.3);
+}
+
+body.theme-light .nav-link-btn {
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--accent);
+}
+
+body.theme-light .nav-link-btn:hover {
+  background: rgba(37, 99, 235, 0.15);
+}
+
+body.theme-light .nav-link-btn.active {
+  background: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+}
+
+/* ============= AI历史页面 ============= */
+.ai-history-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px 60px;
+}
+
+.ai-history-hero {
+  text-align: center;
+  margin-bottom: 60px;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.08) 0%, rgba(99, 102, 241, 0.08) 100%);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+}
+
+body.theme-light .ai-history-hero {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.06) 0%, rgba(99, 102, 241, 0.06) 100%);
+}
+
+.ai-history-title {
+  font-size: 42px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  line-height: 1.2;
+}
+
+.ai-history-subtitle {
+  font-size: 16px;
+  color: var(--text-muted);
+  max-width: 700px;
+  margin: 0 auto 32px;
+  line-height: 1.6;
+}
+
+.ai-history-stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 28px;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* 时间线容器 */
+.timeline-container {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+/* 中心线 */
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+  transform: translateX(-50%);
+}
+
+@media (max-width: 768px) {
+  .timeline-line {
+    left: 30px;
+  }
+}
+
+/* 时间线项目 */
+.timeline-item {
+  position: relative;
+  margin-bottom: 60px;
+  display: flex;
+  width: 100%;
+}
+
+.timeline-item.left {
+  justify-content: flex-start;
+}
+
+.timeline-item.right {
+  justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+  .timeline-item {
+    justify-content: flex-start !important;
+    padding-left: 70px;
+  }
+}
+
+/* 时间线内容 */
+.timeline-content {
+  position: relative;
+  width: 45%;
+  padding: 24px;
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-card);
+  transition: all var(--transition-med);
+}
+
+@media (max-width: 768px) {
+  .timeline-content {
+    width: 100%;
+  }
+}
+
+.timeline-item.left .timeline-content {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+.timeline-item.right .timeline-content {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.timeline-content:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(56, 189, 248, 0.15);
+  border-color: var(--accent);
+}
+
+body.theme-light .timeline-content:hover {
+  box-shadow: 0 20px 40px rgba(37, 99, 235, 0.12);
+}
+
+/* 时间线图标 */
+.timeline-icon {
+  position: absolute;
+  left: 50%;
+  top: 30px;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 50px;
+  background: var(--card-bg);
+  border: 3px solid var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  z-index: 2;
+  box-shadow: 0 0 0 8px var(--bg-color);
+}
+
+@media (max-width: 768px) {
+  .timeline-icon {
+    left: 30px;
+  }
+}
+
+.timeline-item.left .timeline-icon {
+  right: -25px;
+  left: auto;
+  transform: translateX(50%);
+}
+
+.timeline-item.right .timeline-icon {
+  left: -25px;
+  right: auto;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 768px) {
+  .timeline-item.left .timeline-icon,
+  .timeline-item.right .timeline-icon {
+    left: -40px;
+    right: auto;
+    transform: translateX(0);
+  }
+}
+
+/* 年份 */
+.timeline-year {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+/* 标题 */
+.timeline-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  color: var(--text-main);
+}
+
+/* 描述 */
+.timeline-description {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0 0 16px 0;
+}
+
+/* 元数据 */
+.timeline-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.timeline-keypoint,
+.timeline-impact {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.timeline-keypoint {
+  color: var(--accent);
+}
+
+.timeline-impact {
+  color: var(--text-muted);
+}
+
+.timeline-keypoint strong,
+.timeline-impact strong {
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+/* 页尾卡片 */
+.ai-history-footer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-top: 60px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer-card {
+  padding: 24px;
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-card);
+}
+
+.footer-card h3 {
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.footer-card p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .ai-history-title {
+    font-size: 32px;
+  }
+  
+  .ai-history-stats {
+    gap: 24px;
+  }
+  
+  .stat-value {
+    font-size: 24px;
+  }
+  
+  .timeline-item {
+    margin-bottom: 40px;
+  }
+}

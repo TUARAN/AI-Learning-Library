@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import AIHistory from './AIHistory';
 
 // 书籍数据：按原始 HTML 中的配置整理
 const books = [
@@ -277,6 +278,7 @@ function App() {
   const [direction, setDirection] = useState('all');
   const [theme, setTheme] = useState(() => detectPreferredTheme());
   const [toast, setToast] = useState({ show: false, message: '' });
+  const [currentPage, setCurrentPage] = useState('library'); // 'library' or 'history'
 
   // 应用主题到 body，并持久化
   useEffect(() => {
@@ -340,7 +342,7 @@ function App() {
       {/* 顶部导航 */}
       <header className="top-nav">
         <div className="top-nav-inner">
-          <div className="brand">
+          <div className="brand" onClick={() => setCurrentPage('library')} style={{cursor: 'pointer'}}>
             <div className="brand-logo" />
             <div>
               <div className="brand-text-title">AI 书库</div>
@@ -348,6 +350,12 @@ function App() {
             </div>
           </div>
           <div className="nav-right">
+            <button
+              className={`nav-link-btn ${currentPage === 'history' ? 'active' : ''}`}
+              onClick={() => setCurrentPage('history')}
+            >
+              📚 通过历史学AI
+            </button>
             <a
               className="nav-highlight-btn"
               href="https://github.com/TUARAN/AI-Learning-Library"
@@ -387,6 +395,9 @@ function App() {
         </div>
       </header>
 
+      {currentPage === 'history' ? (
+        <AIHistory />
+      ) : (
       <main className="max-width">
         {/* 头部简介 */}
         <section className="hero">
@@ -599,6 +610,7 @@ function App() {
           })}
         </section>
       </main>
+      )}
 
       {/* 底部 */}
       <footer className="footer">
