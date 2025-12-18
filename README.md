@@ -128,6 +128,19 @@
 
 - **Binding name**：`CHECKINS_KV`
 
+如果你的 Cloudflare Pages 控制台提示“此项目的绑定在通过 wrangler.toml 进行管理”，
+请改用 Wrangler 来创建并绑定 KV：
+
+- 创建 KV：
+    - `npx wrangler kv namespace create CHECKINS_KV`
+    - `npx wrangler kv namespace create CHECKINS_KV --preview`
+- 将命令输出的 `id` / `preview_id` 填入 [wrangler.toml](wrangler.toml) 的 `kv_namespaces`
+
+然后用 Wrangler 部署：
+
+- `npm run build`
+- `npx wrangler pages deploy dist --project-name ai-learning-library`
+
 ### 4) 使用方式
 
 部署后：
