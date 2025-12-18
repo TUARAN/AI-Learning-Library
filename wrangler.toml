@@ -15,4 +15,4 @@ kv_namespaces = [
 
 [vars]
 # 非敏感变量可写这里；敏感信息建议用：wrangler pages secret put <NAME>
-APP_URL = "https://aigbooks.pages.dev"
+APP_URL = "https://matrix-ai-pdfs.pages.dev"
