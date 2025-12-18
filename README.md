@@ -106,21 +106,31 @@
 在 GitHub：Settings → Developer settings → OAuth Apps → New OAuth App
 
 - **Homepage URL**：你的站点地址，例如 `https://matrix-ai-pdfs.pages.dev`
-- **Authorization callback URL**：`https://你的域名/api/auth/github/callback`
+- **Authorization callback URL**：`https://matrix-ai-pdfs.pages.dev/api/auth/github/callback`
 
 拿到：
 
 - `Client ID`
 - `Client Secret`
 
-### 2) 配置 Cloudflare Pages 环境变量
+### 2) 配置 Cloudflare Pages 环境变量 / Secrets
 
-在 Cloudflare Pages 项目设置里添加（Production/Preview 都建议配）：
+常用配置项：
 
-- `APP_URL`：站点完整 URL（例如 `https://matrix-ai-pdfs.pages.dev`）
 - `GITHUB_CLIENT_ID`
 - `GITHUB_CLIENT_SECRET`
 - `JWT_SECRET`：随机长字符串（用于签名会话 Cookie）
+
+说明：
+
+- `APP_URL` 建议写在 [wrangler.toml](wrangler.toml) 的 `[vars]`（非敏感）
+- `GITHUB_CLIENT_SECRET` / `JWT_SECRET` 建议用 **Pages secrets**（敏感）
+
+如果你在 Cloudflare Pages 控制台无法直接绑定/设置（提示“此项目的绑定通过 wrangler.toml 管理”），请用 Wrangler 设置 secrets（项目名以你的 Pages 项目为准；本项目线上为 `matrix-ai-pdfs`）：
+
+- `npx wrangler pages secret put GITHUB_CLIENT_ID --project-name matrix-ai-pdfs`
+- `npx wrangler pages secret put GITHUB_CLIENT_SECRET --project-name matrix-ai-pdfs`
+- `npx wrangler pages secret put JWT_SECRET --project-name matrix-ai-pdfs`
 
 ### 3) 配置 Cloudflare KV（存储打卡记录）
 
@@ -129,17 +139,45 @@
 - **Binding name**：`CHECKINS_KV`
 
 如果你的 Cloudflare Pages 控制台提示“此项目的绑定在通过 wrangler.toml 进行管理”，
-请改用 Wrangler 来创建并绑定 KV：
+请用下面这套 **完整流程**（推荐）：
 
-- 创建 KV：
-    - `npx wrangler kv namespace create CHECKINS_KV`
-    - `npx wrangler kv namespace create CHECKINS_KV --preview`
-- 将命令输出的 `id` / `preview_id` 填入 [wrangler.toml](wrangler.toml) 的 `kv_namespaces`
+#### A. 登录 Wrangler（一次性）
 
-然后用 Wrangler 部署：
+- `npx wrangler login`
 
-- `npm run build`
-- `npx wrangler pages deploy dist --project-name ai-learning-library`
+#### B. 创建 KV Namespace（生产 + 预览）
+
+- `npx wrangler kv namespace create CHECKINS_KV`
+- `npx wrangler kv namespace create CHECKINS_KV --preview`
+
+> 这两条命令会输出 `id`（生产）和 `preview_id`（预览）。
+
+#### C. 绑定到 Pages Functions（写入 wrangler.toml）
+
+把输出的 `id` / `preview_id` 填到 [wrangler.toml](wrangler.toml)：
+
+```toml
+kv_namespaces = [
+    { binding = "CHECKINS_KV", id = "<KV_NAMESPACE_ID>", preview_id = "<KV_PREVIEW_NAMESPACE_ID>" }
+]
+```
+
+#### D. 提交 wrangler.toml（强烈建议）
+
+不提交的话，下次走 GitHub 自动部署可能会丢 KV 绑定。
+
+- `git add wrangler.toml`
+- `git commit -m "Bind CHECKINS_KV"`
+- `git push`
+
+#### E. 部署（两选一）
+
+- 方式 1：让 Cloudflare Pages 通过 GitHub 自动构建部署（推荐，最省事）
+- 方式 2：本地手动部署（项目名以你的 Pages 项目为准；本项目线上为 `matrix-ai-pdfs`）：
+    - `npm run build`
+    - `npx wrangler pages deploy dist --project-name matrix-ai-pdfs`
+
+> 是否需要“重置 KV”？一般不需要。只有你想清空打卡数据时，才需要换一个新的 KV namespace。
 
 ### 4) 使用方式
 

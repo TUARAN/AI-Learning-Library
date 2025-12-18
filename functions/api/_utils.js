@@ -97,23 +97,23 @@ export function setCookie(name, value, options = {}) {
 }
 
 export function json(data, init = {}) {
+  const headers = new Headers(init.headers || undefined);
+  if (!headers.has('content-type')) {
+    headers.set('content-type', 'application/json; charset=utf-8');
+  }
   return new Response(JSON.stringify(data), {
     ...init,
-    headers: {
-      'content-type': 'application/json; charset=utf-8',
-      ...(init.headers || {}),
-    },
+    headers,
   });
 }
 
 export function redirect(url, init = {}) {
+  const headers = new Headers(init.headers || undefined);
+  headers.set('Location', url);
   return new Response(null, {
     ...init,
     status: 302,
-    headers: {
-      Location: url,
-      ...(init.headers || {}),
-    },
+    headers,
   });
 }
 
