@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import AIHistory from './AIHistory';
 import AIAlgorithms from './AIAlgorithms';
+import LLMTopic from './LLMTopic';
 import CheckIn from './CheckIn';
 
 // 书籍数据：按原始 HTML 中的配置整理
@@ -280,7 +281,7 @@ function App() {
   const [direction, setDirection] = useState('all');
   const [theme, setTheme] = useState(() => detectPreferredTheme());
   const [toast, setToast] = useState({ show: false, message: '' });
-  const [currentPage, setCurrentPage] = useState('library'); // 'library' | 'history' | 'algorithms' | 'checkin'
+  const [currentPage, setCurrentPage] = useState('library'); // 'library' | 'history' | 'algorithms' | 'llm' | 'checkin'
   const [user, setUser] = useState(null);
 
   // 应用主题到 body，并持久化
@@ -300,7 +301,7 @@ function App() {
   useEffect(() => {
     const url = new URL(window.location.href);
     const page = url.searchParams.get('page');
-    if (page === 'history' || page === 'algorithms' || page === 'library' || page === 'checkin') {
+    if (page === 'history' || page === 'algorithms' || page === 'llm' || page === 'library' || page === 'checkin') {
       setCurrentPage(page);
       url.searchParams.delete('page');
       window.history.replaceState({}, '', url.pathname + url.search + url.hash);
@@ -379,21 +380,36 @@ function App() {
           </div>
           <div className="nav-right">
             <div className="nav-actions">
-              <button
-                className={`nav-link-btn ${currentPage === 'history' ? 'active' : ''}`}
-                onClick={() => setCurrentPage('history')}
-                aria-current={currentPage === 'history' ? 'page' : undefined}
-              >
-                通过历史学AI
-              </button>
-
-              <button
-                className={`nav-link-btn ${currentPage === 'algorithms' ? 'active' : ''}`}
-                onClick={() => setCurrentPage('algorithms')}
-                aria-current={currentPage === 'algorithms' ? 'page' : undefined}
-              >
-                通过算法学AI
-              </button>
+              <div className="nav-tabs" role="navigation" aria-label="页面导航">
+                <button
+                  className={`nav-tab-btn ${currentPage === 'library' ? 'active' : ''}`}
+                  onClick={() => setCurrentPage('library')}
+                  aria-current={currentPage === 'library' ? 'page' : undefined}
+                >
+                  书库资源
+                </button>
+                <button
+                  className={`nav-tab-btn ${currentPage === 'history' ? 'active' : ''}`}
+                  onClick={() => setCurrentPage('history')}
+                  aria-current={currentPage === 'history' ? 'page' : undefined}
+                >
+                  通过历史学AI
+                </button>
+                <button
+                  className={`nav-tab-btn ${currentPage === 'algorithms' ? 'active' : ''}`}
+                  onClick={() => setCurrentPage('algorithms')}
+                  aria-current={currentPage === 'algorithms' ? 'page' : undefined}
+                >
+                  通过算法学AI
+                </button>
+                <button
+                  className={`nav-tab-btn ${currentPage === 'llm' ? 'active' : ''}`}
+                  onClick={() => setCurrentPage('llm')}
+                  aria-current={currentPage === 'llm' ? 'page' : undefined}
+                >
+                  LLM专题
+                </button>
+              </div>
 
               {user ? (
                 <a className="nav-highlight-btn" href="/api/auth/logout" title="退出登录">
@@ -437,6 +453,8 @@ function App() {
         <AIHistory />
       ) : currentPage === 'algorithms' ? (
         <AIAlgorithms />
+      ) : currentPage === 'llm' ? (
+        <LLMTopic />
       ) : currentPage === 'checkin' ? (
         <CheckIn user={user} showToast={showToast} />
       ) : (
