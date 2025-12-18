@@ -395,16 +395,6 @@ function App() {
                 通过算法学AI
               </button>
 
-              {user ? (
-                <button
-                  className={`nav-link-btn ${currentPage === 'checkin' ? 'active' : ''}`}
-                  onClick={() => setCurrentPage('checkin')}
-                  aria-current={currentPage === 'checkin' ? 'page' : undefined}
-                >
-                  打卡
-                </button>
-              ) : null}
-
               {!user ? (
                 <a className="nav-highlight-btn" href="/api/auth/github/start?next=/?page=checkin">
                   <span>学习打卡</span>
@@ -426,6 +416,16 @@ function App() {
                 <span>持续补充中</span>
               </div>
             </div>
+
+            {user ? (
+              <button
+                className={`nav-link-btn ${currentPage === 'checkin' ? 'active' : ''}`}
+                onClick={() => setCurrentPage('checkin')}
+                aria-current={currentPage === 'checkin' ? 'page' : undefined}
+              >
+                打卡
+              </button>
+            ) : null}
             {/* 亮度切换按钮：浅色 / 深色 */}
             <button
               className="theme-toggle"
