@@ -1,5 +1,4 @@
-import { assertEnv, getCookie, redirect, setCookie } from '../../_utils';
-import { json } from '../../_utils';
+import { assertEnv, getCookie, json, redirect, setCookie } from '../../_utils';
 
 function randomState() {
   const bytes = new Uint8Array(16);

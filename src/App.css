@@ -944,6 +944,37 @@ body.theme-light .download-icon {
   line-height: 1.6;
 }
 
+.footer-friends {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-friends-label {
+  color: var(--text-muted);
+}
+
+.footer-friends-sep {
+  opacity: 0.65;
+}
+
+.footer-friend-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  background: rgba(148, 163, 184, 0.12);
+  color: var(--text-main);
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.footer-friend-link:hover {
+  border-color: rgba(148, 163, 184, 0.5);
+  background: rgba(56, 189, 248, 0.12);
+}
+
 @media (max-width: 720px) {
   .footer-links {
     flex-direction: column;
