@@ -370,12 +370,12 @@ function App() {
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') setCurrentPage('library');
             }}
-            aria-label="返回书库首页"
+            aria-label="返回首页"
           >
             <div className="brand-logo" />
             <div>
-              <div className="brand-text-title">AI 书库</div>
-              <div className="brand-text-sub">安东尼学AI · 个人精选</div>
+              <div className="brand-text-title">安东尼学AI</div>
+              <div className="brand-text-sub">学习资料库 · 个人精选</div>
             </div>
           </div>
           <div className="nav-right">
@@ -677,9 +677,9 @@ function App() {
         <div className="footer-inner">
           <div className="footer-links">
             <div>
-              © <span id="yearSpan">{year}</span> AI 全栈学习资料库
+              © <span id="yearSpan">{year}</span> 安东尼学AI
             </div>
-            <div>Personal AI Learning Library · For Study &amp; Research Only</div>
+            <div>Anthony Learns AI · For Study &amp; Research Only</div>
           </div>
           <div className="footer-friends" aria-label="友链">
             <span className="footer-friends-label">友链：</span>

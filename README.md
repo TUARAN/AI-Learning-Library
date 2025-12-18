@@ -1,8 +1,8 @@
-# 📘 AI 书库 (AI Library)
+# 📘 安东尼学AI
 
 🚀 **在线访问：[https://matrix-ai-pdfs.pages.dev/](https://matrix-ai-pdfs.pages.dev/)**
 
-> **给大家安利一个我刚搓的 AI 学习资料站 —— 「AI 书库」。**
+> **给大家安利一个我刚搓的 AI 学习资料站 —— 「安东尼学AI」。**
 >
 > 把平时散落在网盘里的西瓜书、花书、NLP、CV 等经典教材全整理到一起了。
 > 主打一个**干净、无广、直达**。
