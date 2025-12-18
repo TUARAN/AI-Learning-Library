@@ -10,7 +10,7 @@ pages_build_output_dir = "dist"
 # 2) 运行：wrangler kv namespace create CHECKINS_KV --preview
 # 3) 把输出的 id / preview_id 填到下面
 kv_namespaces = [
-	# { binding = "CHECKINS_KV", id = "<KV_NAMESPACE_ID>", preview_id = "<KV_PREVIEW_NAMESPACE_ID>" }
+	 { binding = "CHECKINS_KV", id = "c324126c01b447679b269e31d2173967", preview_id = "a564ef4e59a345ce801cfb0c94243e74" }
 ]
 
 [vars]
