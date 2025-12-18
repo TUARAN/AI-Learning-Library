@@ -93,4 +93,49 @@
 
 ---
 
+## ✅ GitHub 登录 + 打卡（可选功能）
+
+本项目已内置 Cloudflare Pages Functions：
+
+- GitHub OAuth 登录
+- 每日打卡（写入 Cloudflare KV）
+- 查看历史打卡记录
+
+### 1) 创建 GitHub OAuth App
+
+在 GitHub：Settings → Developer settings → OAuth Apps → New OAuth App
+
+- **Homepage URL**：你的站点地址，例如 `https://matrix-ai-pdfs.pages.dev`
+- **Authorization callback URL**：`https://你的域名/api/auth/github/callback`
+
+拿到：
+
+- `Client ID`
+- `Client Secret`
+
+### 2) 配置 Cloudflare Pages 环境变量
+
+在 Cloudflare Pages 项目设置里添加（Production/Preview 都建议配）：
+
+- `APP_URL`：站点完整 URL（例如 `https://matrix-ai-pdfs.pages.dev`）
+- `GITHUB_CLIENT_ID`
+- `GITHUB_CLIENT_SECRET`
+- `JWT_SECRET`：随机长字符串（用于签名会话 Cookie）
+
+### 3) 配置 Cloudflare KV（存储打卡记录）
+
+创建一个 KV Namespace，并在 Pages Functions 绑定：
+
+- **Binding name**：`CHECKINS_KV`
+
+### 4) 使用方式
+
+部署后：
+
+- 顶部导航点击「GitHub 登录」完成授权
+- 登录后会出现「打卡」入口
+- 在「打卡」页进行打卡并查看历史记录（按 UTC 日期统计）
+
+---
+
 *本项目仅用于个人学习与技术交流，所列资源来源于网络，请在遵守版权法律法规的前提下使用。*
