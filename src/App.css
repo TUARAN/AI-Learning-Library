@@ -1806,6 +1806,60 @@ body.theme-light .timeline-content:hover {
   margin-right: auto;
 }
 
+/* ============= 通过算法学AI ============= */
+.algo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  max-width: 1000px;
+  margin: 26px auto 0;
+}
+
+.algo-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 18px 18px 16px;
+}
+
+.algo-title {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.algo-desc {
+  margin: 0 0 12px 0;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.algo-meta {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.algo-meta-row {
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.algo-meta-k {
+  color: var(--accent);
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+.algo-meta-v {
+  color: var(--text-muted);
+}
+
 .footer-card {
   padding: 24px;
   background: var(--card-bg);

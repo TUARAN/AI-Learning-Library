@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import AIHistory from './AIHistory';
+import AIAlgorithms from './AIAlgorithms';
 import CheckIn from './CheckIn';
 
 // 书籍数据：按原始 HTML 中的配置整理
@@ -279,7 +280,7 @@ function App() {
   const [direction, setDirection] = useState('all');
   const [theme, setTheme] = useState(() => detectPreferredTheme());
   const [toast, setToast] = useState({ show: false, message: '' });
-  const [currentPage, setCurrentPage] = useState('library'); // 'library' | 'history' | 'checkin'
+  const [currentPage, setCurrentPage] = useState('library'); // 'library' | 'history' | 'algorithms' | 'checkin'
   const [user, setUser] = useState(null);
 
   // 应用主题到 body，并持久化
@@ -299,7 +300,7 @@ function App() {
   useEffect(() => {
     const url = new URL(window.location.href);
     const page = url.searchParams.get('page');
-    if (page === 'history' || page === 'library' || page === 'checkin') {
+    if (page === 'history' || page === 'algorithms' || page === 'library' || page === 'checkin') {
       setCurrentPage(page);
       url.searchParams.delete('page');
       window.history.replaceState({}, '', url.pathname + url.search + url.hash);
@@ -386,6 +387,14 @@ function App() {
                 通过历史学AI
               </button>
 
+              <button
+                className={`nav-link-btn ${currentPage === 'algorithms' ? 'active' : ''}`}
+                onClick={() => setCurrentPage('algorithms')}
+                aria-current={currentPage === 'algorithms' ? 'page' : undefined}
+              >
+                通过算法学AI
+              </button>
+
               {user ? (
                 <button
                   className={`nav-link-btn ${currentPage === 'checkin' ? 'active' : ''}`}
@@ -433,6 +442,8 @@ function App() {
 
       {currentPage === 'history' ? (
         <AIHistory />
+      ) : currentPage === 'algorithms' ? (
+        <AIAlgorithms />
       ) : currentPage === 'checkin' ? (
         <CheckIn user={user} showToast={showToast} />
       ) : (
