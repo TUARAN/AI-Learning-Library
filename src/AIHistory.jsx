@@ -153,7 +153,7 @@ function AIHistory() {
     <div className="ai-history-page">
       <div className="ai-history-hero">
         <h1 className="ai-history-title">
-          <span className="highlight">通过历史学AI</span>
+          <span className="highlight">学AI历史</span>
         </h1>
         <p className="ai-history-subtitle">
           从图灵测试到ChatGPT，回顾人工智能70余年的发展历程，

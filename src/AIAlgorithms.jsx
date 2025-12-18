@@ -80,7 +80,7 @@ function AIAlgorithms() {
     <div className="ai-history-page">
       <div className="ai-history-hero">
         <h1 className="ai-history-title">
-          <span className="highlight">通过算法学AI</span>
+          <span className="highlight">学AI算法</span>
         </h1>
         <p className="ai-history-subtitle">
           从“怎么搜索”到“怎么优化”，从“如何推断不确定性”到“如何高效检索”，

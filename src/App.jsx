@@ -393,14 +393,14 @@ function App() {
                   onClick={() => setCurrentPage('history')}
                   aria-current={currentPage === 'history' ? 'page' : undefined}
                 >
-                  通过历史学AI
+                  学AI历史
                 </button>
                 <button
                   className={`nav-tab-btn ${currentPage === 'algorithms' ? 'active' : ''}`}
                   onClick={() => setCurrentPage('algorithms')}
                   aria-current={currentPage === 'algorithms' ? 'page' : undefined}
                 >
-                  通过算法学AI
+                  学AI算法
                 </button>
                 <button
                   className={`nav-tab-btn ${currentPage === 'llm' ? 'active' : ''}`}
